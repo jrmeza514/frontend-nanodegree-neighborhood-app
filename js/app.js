@@ -59,7 +59,7 @@ var PlaceOfInterest = function( name , location , hashTag ){
 			lat : 37.3351874,
 			lng : -121.8810715,
 		},
-		"sjsu"
+		"sanjosestateuniversity"
 	),
 	new PlaceOfInterest(
 		"Great America" ,
@@ -107,20 +107,23 @@ var PlaceOfInterest = function( name , location , hashTag ){
 ];
 SelectedPlace = ko.observable();
 var subscription = SelectedPlace.subscribe( function(){
+	 $.each( markers , function( index , mk ){
+	    mk.setIcon(null);
+	 });
+	 infowindow.close();
+	if ( SelectedPlace() != null ) {
+		infowindow.setContent( SelectedPlace().marker.title );
+		// Open The Window
+	    infowindow.open( map, SelectedPlace().marker );
+	    if (map.getZoom() != 12 ) {
+	    	map.setZoom(12);
+	    };
+	    map.panTo( SelectedPlace().location );
 
-	infowindow.setContent( SelectedPlace().marker.title );
-	// Open The Window
-    infowindow.open( map, SelectedPlace().marker );
-    if (map.getZoom() != 12 ) {
-    	map.setZoom(12);
-    };
-    map.panTo( SelectedPlace().location );
+	    $("#detail-panel").removeClass("invisible");
 
-    $.each( markers , function( index , mk ){
-    	mk.setIcon(null);
-    })
-
-    SelectedPlace().marker.setIcon("http://s7.postimage.org/wg6bu3jpj/pointer.png");
+	    SelectedPlace().marker.setIcon("http://s7.postimage.org/wg6bu3jpj/pointer.png");
+	}
 });
 /*
 	Model for the UI Place List which Contains the
@@ -287,6 +290,12 @@ $.each( places , function( index , place ){
         	place.images( resultImages );
     	}
 	});
+});
+$(document).keydown(function( e ){
+	if ( e.which == 27 && SelectedPlace() != null ) {
+		$("#detail-panel").addClass("invisible");
+		SelectedPlace( null );
+	};
 });
 
 })(); //Call The Anonymous function
