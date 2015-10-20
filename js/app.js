@@ -112,7 +112,6 @@ var subscription = SelectedPlace.subscribe( function(){
 	// Open The Window
     infowindow.open( map, SelectedPlace().marker );
     if (map.getZoom() != 12 ) {
-    	console.log(map.getZoom());
     	map.setZoom(12);
     };
     map.panTo( SelectedPlace().location );
