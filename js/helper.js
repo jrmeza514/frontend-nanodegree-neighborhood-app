@@ -1,0 +1,1 @@
+var NAListItem = "<div class='place-item'> %data% </div>";
