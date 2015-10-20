@@ -105,8 +105,9 @@ var PlaceOfInterest = function( name , location , hashTag ){
 
 
 ];
-SelectedPlace = ko.observable( places[0] );
+SelectedPlace = ko.observable();
 var subscription = SelectedPlace.subscribe( function(){
+
 	infowindow.setContent( SelectedPlace().marker.title );
 	// Open The Window
     infowindow.open( map, SelectedPlace().marker );
@@ -115,6 +116,12 @@ var subscription = SelectedPlace.subscribe( function(){
     	map.setZoom(12);
     };
     map.panTo( SelectedPlace().location );
+
+    $.each( markers , function( index , mk ){
+    	mk.setIcon(null);
+    })
+
+    SelectedPlace().marker.setIcon("http://s7.postimage.org/wg6bu3jpj/pointer.png");
 });
 /*
 	Model for the UI Place List which Contains the
