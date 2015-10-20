@@ -123,18 +123,47 @@ img.instagram-image{
 	border: none;
 	outline: none;
 }
-@media screen and ( max-width: 900px ){
+@media screen and ( max-width: 1200px ) and (min-width: 801px ){
+	#detail-panel{
+		position: absolute;
+		width: auto;
+		height: 100px;
+		display: block;
+		top: auto;
+		bottom: 0;
+	}
+}
+@media screen and ( max-width: 800px ){
 	#places-list{
 		display: none;
+		height: 100px;
+		width: 100vw;
+		font-size: 0.8em;
+	}
+	.list-header{
+		display: none;
+	}
+	.place-item{
+		display: block;
+		padding: 0.5em;
+		margin: 0;
+		display: inline-block;
+		width: auto;
 	}
 	#search-bar{
-		display:  none;;
+		display: block;
+		margin: auto;
+		margin-top: 10px;
+		width: 90%;
+		right: auto;
+		margin-left: 10%;
 	}
 	#detail-panel{
 		position: absolute;
 		width: auto;
 		height: 100px;
 		display: block;
+		top: auto;
 		bottom: 0;
 		left: 0;
 	}
