@@ -1,170 +1,187 @@
 html, body {
-	height: 100%;
-	margin: 0;
-	padding: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
+
 #map {
-	height: 100vh;
-	width: 100vw;
+    height: 100vh;
+    width: 100vw;
 }
 
-.ui-wrapper{
-	//position: relative;
-	display: block;
-	top: 0;
-	left: 0;
-}
-#places-list{
-	vertical-align: top;;
-	position: absolute;
-	width: 300px;
-	height: 100vh;
-	top: 0;
-	left: 0;
-	display: block;
-	background: rgba( 0 , 0 , 0 , 0.7);
-	overflow: hidden;
-}
-.inner-list{
-	height: 100%;
-	overflow-y: scroll;
-}
-#search-bar{
-	position: absolute;
-	display: inline-block;
-	width: 400px;
-	vertical-align: top;
-	height: 3em;
-	position: absolute;
-	margin-top: 1em;
-	margin-left: 320px;
-	top: 0;
-	left: 0;
-}
-#search-bar input{
-	width: 80%;
-	height: 100%;
-	padding: 1em;
-	border-radius: 2px;
-	border: none;
-	outline: none;
-	font-size: 1.1em;
-	display: inline-block;
-	vertical-align: top;
-	font-family: Arial;
-}
-.search-icon{
-	display: inline-block;
-	background-image: url("../images/search_icon.svg");
-	background-size: 25px 25px;
-	width: 10%;
-	height: 100%;
-	cursor: pointer;
-	background-color: white;
-	background-position: center;
-	background-repeat: no-repeat;
-	vertical-align: top;
-	margin-left: -10px;
-}
-.place-item{
-	color: white;
-	font-size: 1.1em;
-	font-family: Arial;
-	width: 100%;
-	padding: 0.5em;
-	padding-left: 1em;
-	box-sizing: border-box;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	cursor: pointer;
-}
-.place-item:hover{
-	background-color: rgba(255,255,255,0.5)
-}
-.list-header{
-	color: white;
-	font-size: 1.5em;
-	font-family: Arial;
-	width: 100%;
-	padding: 0.5em;
-	padding-left: 1em;
-	box-sizing: border-box;
-	font-weight: bold;
-	background-color: #F44336;
-}
-#detail-panel{
-	position: absolute;
-	width: auto;
-	height: 200px;
-	display: block;
-	bottom: 0;
-	left: 300px;
-	right: 0;
-	overflow-x: scroll;
-	overflow-y: hidden;
-	white-space: nowrap;
-	overflow-y: hidden;
-	cursor: grab;
-	cursor: -webkit-grab;
+.ui-wrapper {
+    display: block;
+    top: 0;
+    left: 0;
 }
 
-#detail-panel.invisible{
-	display: none;
+#places-list {
+    vertical-align: top;
+    ;
+	position: absolute;
+    width: 300px;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    display: block;
+    background: rgba( 0 , 0 , 0 , 0.7);
+    overflow: hidden;
 }
-.image-list{
-	height: 100%;
 
+.inner-list {
+    height: 100%;
+    overflow-y: scroll;
 }
-img.instagram-image{
-	display: inline;
-	height: 98%;
-	margin: 0;
-	padding: none;
-	border: none;
-	outline: none;
+
+#search-bar {
+    position: absolute;
+    display: inline-block;
+    width: 400px;
+    vertical-align: top;
+    height: 3em;
+    position: absolute;
+    margin-top: 1em;
+    margin-left: 320px;
+    top: 0;
+    left: 0;
 }
-@media screen and ( max-width: 1200px ) and (min-width: 801px ){
-	#detail-panel{
-		position: absolute;
-		width: auto;
-		height: 100px;
-		display: block;
-		top: auto;
-		bottom: 0;
-	}
+
+#search-bar input {
+    width: 80%;
+    height: 100%;
+    padding: 1em;
+    border-radius: 2px;
+    border: none;
+    outline: none;
+    font-size: 1.1em;
+    display: inline-block;
+    vertical-align: top;
+    font-family: Arial;
 }
-@media screen and ( max-width: 800px ){
-	#places-list{
-		display: none;
-		height: 100px;
-		width: 100vw;
-		font-size: 0.8em;
-	}
-	.list-header{
-		display: none;
-	}
-	.place-item{
-		display: block;
-		padding: 0.5em;
-		margin: 0;
-		display: inline-block;
-		width: auto;
-	}
-	#search-bar{
-		display: block;
-		margin: auto;
-		margin-top: 10px;
-		width: 90%;
-		right: auto;
-		margin-left: 10%;
-	}
-	#detail-panel{
-		position: absolute;
-		width: auto;
-		height: 100px;
-		display: block;
-		top: auto;
-		bottom: 0;
-		left: 0;
-	}
+
+.search-icon {
+    display: inline-block;
+    background-image: url("../images/search_icon.svg");
+    background-size: 25px 25px;
+    width: 10%;
+    height: 100%;
+    cursor: pointer;
+    background-color: white;
+    background-position: center;
+    background-repeat: no-repeat;
+    vertical-align: top;
+    margin-left: -10px;
+}
+
+.place-item {
+    color: white;
+    font-size: 1.1em;
+    font-family: Arial;
+    width: 100%;
+    padding: 0.5em;
+    padding-left: 1em;
+    box-sizing: border-box;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.place-item:hover {
+    background-color: rgba(255,255,255,0.5);
+}
+
+.list-header {
+    color: white;
+    font-size: 1.5em;
+    font-family: Arial;
+    width: 100%;
+    padding: 0.5em;
+    padding-left: 1em;
+    box-sizing: border-box;
+    font-weight: bold;
+    background-color: #F44336;
+}
+
+#detail-panel {
+    position: absolute;
+    width: auto;
+    height: 200px;
+    display: block;
+    bottom: 0;
+    left: 300px;
+    right: 0;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    overflow-y: hidden;
+    cursor: grab;
+    cursor: -webkit-grab;
+}
+
+#detail-panel.invisible {
+    display: none;
+}
+
+.image-list {
+    height: 100%;
+}
+
+img.instagram-image {
+    display: inline;
+    height: 98%;
+    margin: 0;
+    padding: none;
+    border: none;
+    outline: none;
+}
+
+@media screen and ( max-width: 1200px ) and (min-width: 801px ) {
+    #detail-panel {
+        position: absolute;
+        width: auto;
+        height: 100px;
+        display: block;
+        top: auto;
+        bottom: 0;
+    };
+}
+
+@media screen and ( max-width: 800px ) {
+    #places-list {
+        display: none;
+        height: 100px;
+        width: 100vw;
+        font-size: 0.8em;
+    }
+
+    .list-header {
+        display: none;
+    }
+
+    .place-item {
+        display: block;
+        padding: 0.5em;
+        margin: 0;
+        display: inline-block;
+        width: auto;
+    }
+
+    #search-bar {
+        display: block;
+        margin: auto;
+        margin-top: 10px;
+        width: 90%;
+        right: auto;
+        margin-left: 10%;
+    }
+
+    #detail-panel {
+        position: absolute;
+        width: auto;
+        height: 100px;
+        display: block;
+        top: auto;
+        bottom: 0;
+        left: 0;
+    };
 }
