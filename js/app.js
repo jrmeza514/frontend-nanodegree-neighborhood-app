@@ -105,7 +105,7 @@ var PlaceOfInterest = function( name , location , hashTag ){
 
 
 ];
-SelectedPlace = ko.observable( places[0] );
+SelectedPlace = ko.observable();
 var subscription = SelectedPlace.subscribe( function(){
 	infowindow.setContent( SelectedPlace().marker.title );
 	// Open The Window

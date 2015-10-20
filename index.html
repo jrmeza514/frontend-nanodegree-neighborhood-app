@@ -28,7 +28,7 @@
 			</div>
 			<div id="detail-panel" data-bind="with: SelectedPlace">
 				<div data-bind="foreach: images">
-					<img data-bind="attr: { src : $data }" class="instagram-image">
+					<img data-bind="attr: { src : $data , alt : $parent.name }" class="instagram-image">
 				</div>
 			</div>
 		</div>
