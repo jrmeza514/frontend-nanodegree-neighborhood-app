@@ -107,6 +107,7 @@ var PlaceOfInterest = function( name , location , hashTag ){
 ];
 SelectedPlace = ko.observable();
 var subscription = SelectedPlace.subscribe( function(){
+<<<<<<< HEAD
 	infowindow.setContent( SelectedPlace().marker.title );
 	// Open The Window
     infowindow.open( map, SelectedPlace().marker );
@@ -180,6 +181,88 @@ var subscription = SearchView.value.subscribe( function(){
 			}
 		});
 
+=======
+
+	infowindow.setContent( SelectedPlace().marker.title );
+	// Open The Window
+    infowindow.open( map, SelectedPlace().marker );
+    if (map.getZoom() != 12 ) {
+    	console.log(map.getZoom());
+    	map.setZoom(12);
+    };
+    map.panTo( SelectedPlace().location );
+
+    $.each( markers , function( index , mk ){
+    	mk.setIcon(null);
+    })
+
+    SelectedPlace().marker.setIcon("http://s7.postimage.org/wg6bu3jpj/pointer.png");
+});
+/*
+	Model for the UI Place List which Contains the
+	list of all the Places that are relevant to the
+	current search and will be used to render
+	the places list in the DOM
+*/
+PlaceList = {
+	list : ko.observableArray( places )
+}
+/*
+	Will Contain The List Of All Markers for
+	the Locations on the Map
+*/
+var markers = [];
+
+/*
+	Model for the
+*/
+var SearchView = {
+	id : "search-input",
+	// Initialize the SearchView with an emptry String
+	value : ko.observable("")
+}
+/*
+	Ensure That the SearchView Always Notifys Any
+	Subscribers about changes in value
+*/
+SearchView.value.extend({ noftify : 'always'});
+
+/*
+	Create a Subscription to the SearchView to Keep
+	Track of its value changes
+*/
+var subscription = SearchView.value.subscribe( function(){
+	/*
+		Create an empty list of results
+	*/
+	var res = [];
+	/*
+		If the Search View Value is Empty or only has Spaces
+	*/
+	if(  SearchView.value().replace(" " , "" ) != "" ) {
+
+		$.each( places , function( index , place ) {
+			/*
+				Make Sure the Current Marker is set to the map
+			*/
+			markers[ index ].setMap( map );
+			/*
+				If The Name of the Current PlaceOfInterest contains
+				the value for the search Add the place to the result
+				array
+			*/
+			if ( place.name.toLowerCase().indexOf( SearchView.value().toLowerCase() ) > -1 ) {
+				res.push( place  );
+			}
+			/*
+				Otherwise, Make sure the marker is removed from the map
+			*/
+			else {
+				markers[ index ].setMap( null );
+			}
+		});
+
+>>>>>>> master
 	}
 	/*
 		If the SearchView has no data

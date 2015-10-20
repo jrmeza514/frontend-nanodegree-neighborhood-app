@@ -8,6 +8,10 @@ html, body {
 }
 
 .ui-wrapper{
+<<<<<<< HEAD
+=======
+	//position: relative;
+>>>>>>> master
 	display: block;
 	top: 0;
 	left: 0;
