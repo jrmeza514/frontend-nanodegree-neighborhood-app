@@ -16,7 +16,11 @@
 				<div class="list-header">
 					Places
 				</div>
+<<<<<<< HEAD
 				<div class="inner-list" data-bind="foreach: list">
+=======
+				<div data-bind="foreach: list" class="inner-list">
+>>>>>>> master
 					<div class="place-item" data-bind="click: setSelected">
 						<span data-bind="text: name"></span>
 					</div>
@@ -26,8 +30,8 @@
 				<input type="text" id="search-input" data-bind="textInput: value" placeholder="Search for places ....">
 				<div class="search-icon"></div>
 			</div>
-			<div id="detail-panel" data-bind="with: SelectedPlace" class="class="dragscroll">
-				<div data-bind="foreach: images">
+			<div id="detail-panel" data-bind="with: SelectedPlace" class="dragscroll">
+				<div data-bind="foreach: images" class="image-list">
 					<img data-bind="attr: { src : $data }" class="instagram-image">
 				</div>
 			</div>
