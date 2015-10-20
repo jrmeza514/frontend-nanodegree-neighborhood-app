@@ -26,7 +26,7 @@
 				<input type="text" id="search-input" data-bind="textInput: value" placeholder="Search for places ....">
 				<div class="search-icon"></div>
 			</div>
-			<div id="detail-panel" data-bind="with: SelectedPlace">
+			<div id="detail-panel" data-bind="with: SelectedPlace" class="dragscroll">
 				<div data-bind="foreach: images">
 					<img data-bind="attr: { src : $data }" class="instagram-image">
 				</div>
@@ -38,6 +38,7 @@
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB44h4IZwsCrqndpZ9Xe-2Bcw_I0tZ90Ds&callback=initMap"
         async defer></script>
         <script type="text/javascript" src="js/helper.js"></script>
+        <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js">
 		<script type="text/javascript" src="js/app.js"></script>
 	</body>
 </html>
