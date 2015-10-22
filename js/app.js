@@ -1,10 +1,10 @@
 /*
-	Run Anonymous Function To Prevent Anything From
-	Spreading To The Global Scope.
+    Run Anonymous Function To Prevent Anything From
+    Spreading To The Global Scope.
 */
 (function() {
     /*
-    	Constructor for the PlaceOfInterest Object
+        Constructor for the PlaceOfInterest Object
     */
     var PlaceOfInterest = function(name, location, hashTag) {
         this.name = name;
@@ -17,8 +17,8 @@
         this.marker = null;
     };
     /*
-    	Contains the list of all the data for every location
-    	without any filtering
+        Contains the list of all the data for every location
+        without any filtering
     */
     places = [
         new PlaceOfInterest(
@@ -95,6 +95,8 @@
 
 
     ];
+    // Object for Storing Error Message
+    ErrorMessage = ko.observable();
     // Object for the Seleted Place
     SelectedPlace = ko.observable();
 
@@ -110,7 +112,9 @@
         if (SelectedPlace() !== null) {
             // Set The InfoWindow Content to
             // The Title of the Selected Place
-            infowindow.setContent(SelectedPlace().marker.title);
+            infowindow.setContent(
+                SelectedPlace().marker.title + "<img class='infowindow-image' src='" + SelectedPlace().images()[0] + "'>"
+            );
             // Open The Window
             infowindow.open(map, SelectedPlace().marker);
             // Pan To The Selected Marker
@@ -122,22 +126,22 @@
         }
     });
     /*
-    	Model for the UI Place List which Contains the
-    	list of all the Places that are relevant to the
-    	current search and will be used to render
-    	the places list in the DOM
+        Model for the UI Place List which Contains the
+        list of all the Places that are relevant to the
+        current search and will be used to render
+        the places list in the DOM
     */
     PlaceList = {
         list: ko.observableArray(places)
     };
     /*
-    	Will Contain The List Of All Markers for
-    	the Locations on the Map
+        Will Contain The List Of All Markers for
+        the Locations on the Map
     */
     var markers = [];
 
     /*
-    	Model for the
+        Model for the
     */
     var SearchView = {
         id: "search-input",
@@ -145,42 +149,42 @@
         value: ko.observable("")
     };
     /*
-    	Ensure That the SearchView Always Notifys Any
-    	Subscribers about changes in value
+        Ensure That the SearchView Always Notifys Any
+        Subscribers about changes in value
     */
     SearchView.value.extend({
         noftify: 'always'
     });
 
     /*
-    	Create a Subscription to the SearchView to Keep
-    	Track of its value changes
+        Create a Subscription to the SearchView to Keep
+        Track of its value changes
     */
     var SearchViewSubscription = SearchView.value.subscribe(function() {
         /*
-        	Create an empty list of results
+            Create an empty list of results
         */
         var res = [];
         /*
-        	If the Search View Value is Empty or only has Spaces
+            If the Search View Value is Empty or only has Spaces
         */
         if (SearchView.value().replace(" ", "") !== "") {
 
             $.each(places, function(index, place) {
                 /*
-                	Make Sure the Current Marker is set to the map
+                    Make Sure the Current Marker is set to the map
                 */
                 markers[index].setMap(map);
                 /*
-                	If The Name of the Current PlaceOfInterest contains
-                	the value for the search Add the place to the result
-                	array
+                    If The Name of the Current PlaceOfInterest contains
+                    the value for the search Add the place to the result
+                    array
                 */
                 if (place.name.toLowerCase().indexOf(SearchView.value().toLowerCase()) > -1) {
                     res.push(place);
                 }
                 /*
-                	Otherwise, Make sure the marker is removed from the map
+                    Otherwise, Make sure the marker is removed from the map
                 */
                 else {
                     markers[index].setMap(null);
@@ -189,8 +193,8 @@
 
         }
         /*
-        	If the SearchView has no data
-        	Make all results available
+            If the SearchView has no data
+            Make all results available
         */
         else {
             $.each(markers, function(index, marker) {
@@ -198,47 +202,51 @@
                 marker.setMap(map);
             });
             /*
-            	Set the results array equal to the original
-            	set of places
+                Set the results array equal to the original
+                set of places
             */
             res = places;
         }
         /*
-        	Set The Observable Place List Result equal to the
-        	Results Array
+            Set The Observable Place List Result equal to the
+            Results Array
         */
         PlaceList.list(res);
     });
 
     ko.applyBindings(SearchView);
     /**
-    	Utility For Initializing The Google Map
-    	Needs To Be Global
+        Utility For Initializing The Google Map
+        Needs To Be Global
     */
     initMap = function() {
         /*
-        	Create New InfoWindow
+            Create New InfoWindow
         */
         infowindow = new google.maps.InfoWindow({
             content: "contentString"
         });
         /*
-        	Instantiate a new map object
+            Instantiate a new map object
         */
         map = new google.maps.Map(document.getElementById('map'), {
             // Set The Center Coordinates
             center: {
                 lat: 37.3505139,
                 lng: -121.9963086
-            },
-            // Set Initial Zoom
-            zoom: 12
+            }
         });
+        // crete map boundaries
+        var bounds = new google.maps.LatLngBounds();
         /*
-        	Create a Marker for Every PlaceOfInterestItem
-        	and Store is in the markers array
+            Create a Marker for Every PlaceOfInterestItem
+            and Store is in the markers array
         */
         $.each(places, function(index, place) {
+            // create lanLng for marker
+            var myLatLng = new google.maps.LatLng(place.location.lat, place.location.lng);
+            // adjust bounds
+            bounds.extend(myLatLng);
             // create new marker
             var marker = new google.maps.Marker({
                 // set it's map to the map we created
@@ -252,6 +260,7 @@
                 title: place.name
 
             });
+
             place.marker = marker;
             // Make InfoWindow Appera On Click
             marker.addListener('click', function() {
@@ -261,18 +270,20 @@
             // add the marker to the marker array
             markers.push(marker);
         });
+        // fit map to bounds
+        map.fitBounds(bounds);
     };
 
     /*
-		Base Url For The InstaGram API Request
-		Search By HashTag
-		Replace %hashTag% with your hashtag
+        Base Url For The InstaGram API Request
+        Search By HashTag
+        Replace %hashTag% with your hashtag
     */
     var baseUrl = "https://api.instagram.com/v1/tags/%hashTag%/media/recent?access_token=35376971.52c688d.7841812059474470834c3b5dbbd5bfa8";
 
     /*
-		Iterate Through All Places to Create The Api Call For Each
-		Object
+        Iterate Through All Places to Create The Api Call For Each
+        Object
     */
     $.each(places, function(index, place) {
         // create url for each place
@@ -289,34 +300,47 @@
             cache: true,
             // set success callback
             success: function(result) {
-            	// Make Sure Result is valid
-                if ( typeof result.data !== 'undefined' ) {
-                	// create empty array of relust Images
-	                var resultImages = [];
-	                // Iterate through all result data objects
-	                $.each( result.data, function(index, item) {
-	                    // Add the current result image to
-	                    // the array
-	                    resultImages.push(
-	                        // get the standard resolution
-	                        // image url
-	                        item.images.standard_resolution.url
-	                    );
-	                });
-	                // set the places object observable
-	                // to the result images array
-	                place.images(resultImages);
-                };
+                // Make Sure Result is valid
+                if (typeof result.data !== 'undefined') {
+                    // create empty array of relust Images
+                    var resultImages = [];
+                    // Iterate through all result data objects
+                    $.each(result.data, function(index, item) {
+                        // Add the current result image to
+                        // the array
+                        resultImages.push(
+                            // get the standard resolution
+                            // image url
+                            item.images.standard_resolution.url
+                        );
+                        var preloadedImage = new Image();
+                        preloadedImage.src = item.images.standard_resolution.url;
+                    });
+                    // set the places object observable
+                    // to the result images array
+                    place.images(resultImages);
+                }
             },
-            error: function( xhr, textStatus, errorThrown ){
-            	//ensure that the
-            	place.images([]);
-            	console.log("error");
+            error: function(xhr, textStatus, errorThrown) {
+                //ensure that the
+                place.images([]);
+                // Show custom Error Message if something goes wrong
+                ErrorMessage({
+                    "title": "Network Error",
+                    "messages": [
+                        "Oops... We Had Some Trouble Fetching the data.",
+                        "Try Refreshing your <a href=''> browser </a>"
+                    ]
+                });
+                // Remove message after 2 seconds
+                setTimeout(function() {
+                    ErrorMessage(null);
+                }, 2000);
             }
         });
     });
     /*
-    	Add Key Listener to the document object
+        Add Key Listener to the document object
     */
     $(document).keydown(function(e) {
         // if key pressed is escape and there is a selected place
@@ -326,5 +350,25 @@
             //make the selected place null
             SelectedPlace(null);
         }
+    });
+    // Make List Visible On Mobile Devices
+    // Only When The Search Input is Active
+    $("#search-input").focus(function() {
+        // toggle list on
+        $("#places-list").addClass("toggle-on");
+        // change search-icon to close icon
+        $("#search-icon").addClass("exit");
+        //hide the deatil panel to make room for keyboard
+        $("#detail-panel").addClass("search-hidden");
+    });
+    // Hide list on mobile devices when
+    // seach input loses focus
+    $("#search-input").blur(function() {
+        // Turn off list
+        $("#places-list").removeClass("toggle-on");
+        //back to search icon
+        $("#search-icon").removeClass("exit");
+        // show detail panel again
+        $("#detail-panel").removeClass("search-hidden");
     });
 })(); //Call The Anonymous function
