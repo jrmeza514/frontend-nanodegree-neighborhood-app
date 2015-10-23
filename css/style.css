@@ -167,7 +167,6 @@ img.instagram-image {
 @media screen and ( max-width: 1200px ) and (min-width: 801px ) {
     #detail-panel {
         position: absolute;
-        width: 100%;
         height: 100px;
         display: block;
     };
